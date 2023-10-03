@@ -1,56 +1,65 @@
 <template>
-    <div class="card-container">
-      <div class="card">
-        <!-- Cabeçalho do card -->
-        <div class="card-header">
-          <!-- Abas do card -->
-          <div class="tabs">
-            <div
-              class="tab"
-              v-for="(tab, index) in tabs"
-              :key="index"
-              @click="selectTab(index)"
-              :class="{ 'active': selectedIndex === index }"
-            >
-              {{ tab.label }}
-            </div>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">
+        <div class="tabs">
+          <div
+            class="tab"
+            v-for="(tab, index) in tabs"
+            :key="index"
+            @click="selectTab(index)"
+            :class="{ 'active': selectedIndex === index }"
+          >
+            {{ tab.label }}
           </div>
         </div>
-        <!-- Conteúdo da aba selecionada -->
-        <div class="card-content">
-          <div v-show="selectedIndex === 0">Shannon</div>
-          <div v-show="selectedIndex === 1">Nyquist</div>
-          <div v-show="selectedIndex === 2">Conversão de mW para dBm</div>
-          <div v-show="selectedIndex === 3">EIRP</div>
-          <div v-show="selectedIndex === 4">FSLP</div>
+      </div>
+      <div class="card-content">
+        <div v-show="selectedIndex === 0">
+          <ShannonCalculator />
         </div>
+        <div v-show="selectedIndex === 1">         
+          <NyquistCalculator />
+        </div>
+        <div v-show="selectedIndex === 2">mW para dBm</div>
+        <div v-show="selectedIndex === 3">EIRP</div>
+        <div v-show="selectedIndex === 4">FSLP</div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        tabs: [
-          { label: 'Shannon' },
-          { label: 'Nyquist' },
-          { label: 'Conversão de mW para dBm' },
-          { label: 'EIRP' },
-          { label: 'FSLP' },
-        ],
-        selectedIndex: 0,
-      };
+  </div>
+</template>
+
+<script>
+import ShannonCalculator from './ShannonCalculator.vue';
+import NyquistCalculator from './NyquistCalculator.vue';
+
+
+export default {
+  components: {
+    ShannonCalculator,
+    NyquistCalculator
+  },
+  data() {
+    return {
+      tabs: [
+        { label: 'Shannon' },
+        { label: 'Nyquist' },
+        { label: 'mW para dBm' },
+        { label: 'EIRP' },
+        { label: 'FSLP' },
+      ],
+      selectedIndex: 0,
+    };
+  },
+  methods: {
+    selectTab(index) {
+      this.selectedIndex = index;
     },
-    methods: {
-      selectTab(index) {
-        this.selectedIndex = index;
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
   
-  <style scoped>
+  <style >
   .card-container {
     margin: 0;
     padding: 0;
@@ -64,16 +73,16 @@
   }
   
   .card {
-    background-color: rgba(131, 131, 131, 0.938);
+    background-color: #f4f4f4;
     width: 800px;
-    height: 500px;
-    border: 1px solid #ccc;
+    min-height: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     overflow: hidden;
   }
   
   .card-header {
-    background-color: #333;
+    background-color: #075488;
     color: #fff;
   }
   
@@ -84,17 +93,78 @@
   .tab {
     flex: 1;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
   }
   
   .tab.active {
-    background-color: rgba(177, 173, 173, 0.808);
-    color: #333;
+    background-color: #467da1fb;
   }
   
   .card-content {
+    text-align: center;
+    margin: 0 auto;
+    padding: 50px 180px 80px 180px;
+    max-width: 300px;
+    background-color: #f4f4f4;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .form-container {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .input-container {
+    margin-bottom: 20px;
+  }
+
+  .input-container label {
+    display: block;
+  }
+
+  .input-container input {
+    width: 100%;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .button-container {
+    text-align: center;
+  }
+
+  .calcular-button {
+    font-size: 14px;
+    background-color: #075488;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 60px;
+    cursor: pointer;
+  }
+
+  .resultado {  
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .resultado-box {
+    background-color: #afd6f0bc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .result-value {
+    font-weight: bold;
+    font-size: 16px;
   }
   </style>
   
