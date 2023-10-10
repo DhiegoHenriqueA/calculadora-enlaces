@@ -34,6 +34,16 @@
       </div>
 
       <div class="input-container">
+        <label for="fslp">Caminho de perda de espaço livre:</label>
+        <input
+          type="number"
+          id="fslp"
+          v-model="fslp"
+          placeholder="Insira o Caminho de perda de espaço livre"
+        />
+      </div>
+
+      <div class="input-container">
         <label for="gainAntennaRX">Ganho da Antena RX (dBi): </label>
         <input
           type="number"
@@ -80,31 +90,26 @@ export default {
       lossesCaboTX: null,
       gainAntennaRX: null,
       lossesCaboRX: null,
+      fslp: null,
       rsl: null,
     };
   },
   methods: {
     calculateRSL() {
-      const powerTransmission = this.powerTransmission;
-      const gainAntennaTX = this.gainAntennaTX;
-      const lossesCaboTX = this.lossesCaboTX;
-      const gainAntennaRX = this.gainAntennaRX;
-      const lossesCaboRX = this.lossesCaboRX;
-
       if (
-        powerTransmission !== 0 &&
-        gainAntennaTX !== 0 &&
-        lossesCaboTX !== 0 &&
-        gainAntennaRX !== 0 &&
-        lossesCaboRX !== 0
+        this.powerTransmission !== 0 &&
+        this.gainAntennaTX !== 0 &&
+        this.lossesCaboTX !== 0 &&
+        this.gainAntennaRX !== 0 &&
+        this.lossesCaboRX !== 0
       ) {
         const rsl =
-          powerTransmission +
-          gainAntennaTX -
-          lossesCaboTX -
+          this.powerTransmission +
+          this.gainAntennaTX -
+          this.lossesCaboTX -
           this.fslp +
-          gainAntennaRX -
-          lossesCaboRX;
+          this.gainAntennaRX -
+          this.lossesCaboRX;
         this.rsl = rsl.toFixed(2);
       } else {
         this.rsl = null;
