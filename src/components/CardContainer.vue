@@ -27,7 +27,15 @@
         <div v-show="selectedIndex === 3">
           <EIRPCalculator />
         </div>
-        <div v-show="selectedIndex === 4">FSLP</div>
+        <div v-show="selectedIndex === 4">
+          <FSLPCalculator />
+        </div>
+        <div v-show="selectedIndex === 5">
+          <RSLCalculator />
+        </div>
+        <div v-show="selectedIndex === 6">
+          <FresnelZoneCalculator />
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +46,9 @@ import ShannonCalculator from "./ShannonCalculator.vue";
 import NyquistCalculator from "./NyquistCalculator.vue";
 import ConversionToDbmCalculator from "./ConversionToDbmCalculator.vue";
 import EIRPCalculator from "./EIRPCalculator.vue";
+import FSLPCalculator from "./FSLPCalculator.vue";
+import RSLCalculator from "./RSLCalculator.vue";
+import FresnelZoneCalculator from "./FresnelZoneCalculator.vue";
 
 export default {
   components: {
@@ -45,6 +56,9 @@ export default {
     NyquistCalculator,
     ConversionToDbmCalculator,
     EIRPCalculator,
+    FSLPCalculator,
+    RSLCalculator,
+    FresnelZoneCalculator,
   },
   data() {
     return {
@@ -54,6 +68,8 @@ export default {
         { label: "mW para dBm" },
         { label: "EIRP" },
         { label: "FSLP" },
+        { label: "RSL" },
+        { label: "Fresnel zone" },
       ],
       selectedIndex: 0,
     };
