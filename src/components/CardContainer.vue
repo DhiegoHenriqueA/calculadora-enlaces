@@ -25,18 +25,22 @@
           <ConversionToDbmCalculator />
         </div>
         <div v-show="selectedIndex === 3">
-          <EIRPCalculator />
+          <ConversionToMwCalculator />
         </div>
         <div v-show="selectedIndex === 4">
-          <FSLPCalculator />
+          <EIRPCalculator />
         </div>
         <div v-show="selectedIndex === 5">
-          <RSLCalculator />
+          <FSLPCalculator />
         </div>
         <div v-show="selectedIndex === 6">
+          <RSLCalculator />
+        </div>
+        <div v-show="selectedIndex === 7">
           <FresnelZoneCalculator />
         </div>
       </div>
+      <div class="footer">by Dhiego Henrique Azevedo | @2023</div>
     </div>
   </div>
 </template>
@@ -45,6 +49,7 @@
 import ShannonCalculator from "./ShannonCalculator.vue";
 import NyquistCalculator from "./NyquistCalculator.vue";
 import ConversionToDbmCalculator from "./ConversionToDbmCalculator.vue";
+import ConversionToMwCalculator from "./ConversionToMwCalculator.vue";
 import EIRPCalculator from "./EIRPCalculator.vue";
 import FSLPCalculator from "./FSLPCalculator.vue";
 import RSLCalculator from "./RSLCalculator.vue";
@@ -55,6 +60,7 @@ export default {
     ShannonCalculator,
     NyquistCalculator,
     ConversionToDbmCalculator,
+    ConversionToMwCalculator,
     EIRPCalculator,
     FSLPCalculator,
     RSLCalculator,
@@ -66,6 +72,8 @@ export default {
         { label: "Shannon" },
         { label: "Nyquist" },
         { label: "mW para dBm" },
+        { label: "dBm para mW" },
+
         { label: "EIRP" },
         { label: "FSLP" },
         { label: "RSL" },
@@ -83,6 +91,12 @@ export default {
 </script>
 
 <style>
+.footer {
+  text-align: center;
+  padding: 14px;
+  font-size: 14px;
+  color: rgb(77, 76, 76);
+}
 .card-container {
   margin: 0;
   padding: 0;
@@ -97,7 +111,7 @@ export default {
 
 .card {
   background-color: #f4f4f4;
-  width: 800px;
+  width: 840px;
   min-height: 300px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
@@ -128,7 +142,7 @@ export default {
   text-align: center;
   margin: 0 auto;
   padding: 50px 180px 80px 180px;
-  max-width: 300px;
+  max-width: 340px;
   background-color: #f4f4f4;
 }
 
@@ -181,6 +195,12 @@ h3 {
 
 .resultado-box {
   background-color: #afd6f0bc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.error-box {
+  background-color: #e09292bc;
   border-radius: 5px;
   padding: 10px;
 }

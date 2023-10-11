@@ -1,53 +1,81 @@
 <template>
-    <div >
-      <h3>Capacidade Máxima de Canal</h3>
-  
-      <div class="form-container">
-        <div class="input-container">
-            <label for="larguraBanda">Largura de Banda (Hz):</label>
-          <input type="number" id="larguraBanda" v-model="larguraBanda" placeholder="Insira a largura de banda">
-        </div>
-  
-        <div class="input-container">
-          <label for="sinalRuido">Relação Sinal-Ruído (dB):</label>
-          <input type="number" id="sinalRuido" v-model="sinalRuido" placeholder="Insira a relação sinal-ruído">
-        </div>
-  
-        <div class="button-container">
-          <button class="calcular-button" @click="calcularCapacidade">Calcular Capacidade</button>
-        </div>
+  <div>
+    <h3>Capacidade Máxima de Canal</h3>
+
+    <div class="form-container">
+      <div class="input-container">
+        <label for="widthBand">Largura de Banda (Hz):</label>
+        <input
+          type="number"
+          id="widthBand"
+          v-model="widthBand"
+          placeholder="Insira a largura de banda"
+        />
       </div>
-  
-      <div class="resultado" v-if="capacidade !== null">
-        <div class="resultado-box">
-          <p>A capacidade máxima do canal é <span class="result-value">{{ capacidade.toFixed(2) }} bps</span>.</p>
-        </div>
+
+      <div class="input-container">
+        <label for="signalNoise">Relação Sinal-Ruído (dB):</label>
+        <input
+          type="number"
+          id="signalNoise"
+          v-model="signalNoise"
+          placeholder="Insira a relação sinal-ruído"
+        />
+      </div>
+
+      <div class="button-container">
+        <button class="calcular-button" @click="calcularCapacidade">
+          Calcular Capacidade
+        </button>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        larguraBanda: null,
-        sinalRuido: null,
-        capacidade: null
-      };
-    },
-    methods: {
-      calcularCapacidade() {
-        // Converter a relação sinal-ruído de decibéis para uma relação linear
-        const sinalRuidoLinear = Math.pow(10, this.sinalRuido / 10);
-        
-        // Calcular a capacidade máxima do canal em bps
-        this.capacidade = this.larguraBanda * Math.log2(1 + sinalRuidoLinear);
-      }
-    }
-  };
-  </script>
-  
-  <style >
 
-  </style>
-  
+    <div class="resultado" v-if="capacity !== null">
+      <div class="resultado-box">
+        <p>
+          A capacidade máxima do canal é
+          <span class="result-value">{{ capacity.toFixed(2) }} bps</span>.
+        </p>
+      </div>
+    </div>
+    <div class="resultado" v-if="error">
+      <div class="error-box">
+        <p>Valor de entrada é inválido.</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      widthBand: null,
+      signalNoise: null,
+      capacity: null,
+      error: false,
+    };
+  },
+  methods: {
+    // largura de banda (Hz) * log2(1 + Sinal-Ruído)
+    calcularCapacidade() {
+      this.error = false;
+      if (
+        this.widthBand === null ||
+        this.widthBand === "" ||
+        this.signalNoise === null ||
+        this.signalNoise === ""
+      ) {
+        this.error = true;
+        this.capacity = null;
+        return;
+      }
+      // Converter a relação sinal-ruído de decibéis para uma relação linear
+      const signalNoiseLinear = Math.pow(10, this.signalNoise / 10);
+
+      // Calcular a capacidade máxima do canal em bps
+      this.capacity = this.widthBand * Math.log2(1 + signalNoiseLinear);
+    },
+  },
+};
+</script>

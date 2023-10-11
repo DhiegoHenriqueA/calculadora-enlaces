@@ -1,29 +1,29 @@
 <template>
   <div>
-    <h3>Conversão de mW para dBm</h3>
+    <h3>Conversão de dBm para mW</h3>
 
     <div class="form-container">
       <div class="input-container">
-        <label for="powerMw">Potência em mW:</label>
+        <label for="powerDbm">Potência em dBm:</label>
         <input
           type="number"
-          id="powerMw"
-          v-model="powerMw"
-          placeholder="Insira a Potência em mW:"
+          id="powerDbm"
+          v-model="powerDbm"
+          placeholder="Insira a Potência em dBm:"
         />
       </div>
       <div class="button-container">
-        <button class="calcular-button" @click="conversionToDbm">
-          Converter para dBm
+        <button class="calcular-button" @click="conversionToMw">
+          Converter para mW
         </button>
       </div>
     </div>
 
-    <div class="resultado" v-if="resultDbm !== null">
+    <div class="resultado" v-if="resultMW !== null">
       <div class="resultado-box">
         <p>
           O resultado da conversão é
-          <span class="result-value">{{ resultDbm }} dBm.</span>
+          <span class="result-value">{{ resultMW }} mW.</span>
         </p>
       </div>
     </div>
@@ -39,22 +39,22 @@
 export default {
   data() {
     return {
-      powerMw: null,
-      resultDbm: null,
+      powerDbm: null,
+      resultMW: null,
       error: false,
     };
   },
   methods: {
-    conversionToDbm() {
+    conversionToMw() {
       this.error = false;
-      if (this.powerMw === null || this.powerMw === "") {
+      if (this.powerDbm === null || this.powerDbm === "") {
         this.error = true;
-        this.resultDbm = null;
+        this.resultMW = null;
         return;
       }
 
-      // 10 * log10(Potência em mW).
-      this.resultDbm = (10 * Math.log10(this.powerMw)).toFixed(2);
+      // 10 (Potência em dBm / 10).
+      this.resultMW = Math.pow(10, this.powerDbm / 10).toFixed(2);
     },
   },
 };

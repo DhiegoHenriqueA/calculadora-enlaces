@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CardContainer from '@/components/CardContainer.vue';
+import CardContainer from "@/components/CardContainer.vue";
 
 export default {
   components: {
@@ -14,9 +14,9 @@ export default {
 };
 </script>
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 </style>
