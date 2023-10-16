@@ -38,6 +38,11 @@
         </p>
       </div>
     </div>
+    <div class="resultado" v-if="error">
+      <div class="error-box">
+        <p>Valor de entrada é inválido.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -48,19 +53,23 @@ export default {
       distance: null,
       frequency: null,
       fslp: null,
+      error: false,
     };
   },
   methods: {
     calculateFSLP() {
-      if (this.distance > 0 && this.frequency > 0) {
-        const fslp =
-          32.4 +
-          20 * Math.log10(this.distance) +
-          20 * Math.log10(this.frequency);
-        this.fslp = fslp.toFixed(2);
-      } else {
+      this.error = false;
+
+      if (this.distance <= 0 || this.frequency <= 0) {
+        this.error = true;
         this.fslp = null;
+        return;
       }
+
+      // 32,4 + 20 * log10(d) + 20 * log10(f)
+      const fslp =
+        32.4 + 20 * Math.log10(this.distance) + 20 * Math.log10(this.frequency);
+      this.fslp = fslp.toFixed(2);
     },
   },
 };

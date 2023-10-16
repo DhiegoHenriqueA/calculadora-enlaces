@@ -40,7 +40,9 @@
           <FresnelZoneCalculator />
         </div>
       </div>
-      <div class="footer">by Dhiego Henrique Azevedo | @2023</div>
+      <div class="footer">
+        by Dhiego Henrique Azevedo | @2023 | IFC Araquari
+      </div>
     </div>
   </div>
 </template>
@@ -93,7 +95,7 @@ export default {
 <style>
 .footer {
   text-align: center;
-  padding: 14px;
+  padding: 16px;
   font-size: 14px;
   color: rgb(77, 76, 76);
 }
@@ -112,7 +114,7 @@ export default {
 .card {
   background-color: #f4f4f4;
   width: 840px;
-  min-height: 300px;
+  min-height: 260px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   overflow: hidden;

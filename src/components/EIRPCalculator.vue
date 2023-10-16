@@ -24,7 +24,7 @@
       </div>
 
       <div class="input-container">
-        <label for="lossesCable">Perdas no Cabo (dB):</label>
+        <label for="lossesCable">Perdas no Cabo e conectores(dB):</label>
         <input
           type="number"
           id="lossesCable"
@@ -48,6 +48,11 @@
         </p>
       </div>
     </div>
+    <div class="resultado" v-if="error">
+      <div class="error-box">
+        <p>Valor de entrada é inválido.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -59,14 +64,32 @@ export default {
       antennaGain: null,
       lossesCable: null,
       EIRPValue: null,
+      error: false,
     };
   },
   methods: {
     calculate() {
-      this.EIRPValue =
+      this.error = false;
+
+      if (
+        this.transmissionPower === null ||
+        this.transmissionPower === "" ||
+        this.antennaGain === null ||
+        this.antennaGain === "" ||
+        this.lossesCable === null ||
+        this.lossesCable === ""
+      ) {
+        this.error = true;
+        this.EIRPValue = null;
+        return;
+      }
+
+      //  Potência de Transmissão (dBm) + Ganho da Antena (dBi) - Perdas no Cabo (dB).
+      this.EIRPValue = parseFloat(
         parseFloat(this.transmissionPower) +
-        parseFloat(this.antennaGain) -
-        parseFloat(this.lossesCable);
+          parseFloat(this.antennaGain) -
+          parseFloat(this.lossesCable)
+      ).toFixed(2);
     },
   },
 };

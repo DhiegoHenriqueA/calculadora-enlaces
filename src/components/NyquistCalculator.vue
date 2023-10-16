@@ -19,7 +19,7 @@
           type="number"
           id="modulationMultilevel"
           v-model="modulationMultilevel"
-          placeholder="Insira a modulação multinível"
+          placeholder="exemplo: 'dibit' insira '2', 'pentabit' insira '5' ..."
         />
       </div>
 

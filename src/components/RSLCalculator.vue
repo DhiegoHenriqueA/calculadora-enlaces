@@ -34,12 +34,12 @@
       </div>
 
       <div class="input-container">
-        <label for="fslp">Caminho de perda de espaço livre:</label>
+        <label for="fslp">FSLP:</label>
         <input
           type="number"
           id="fslp"
           v-model="fslp"
-          placeholder="Insira o Caminho de perda de espaço livre"
+          placeholder="Insira o FSLP"
         />
       </div>
 
@@ -78,6 +78,11 @@
         </p>
       </div>
     </div>
+    <div class="resultado" v-if="error">
+      <div class="error-box">
+        <p>Valor de entrada é inválido.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -92,28 +97,35 @@ export default {
       lossesCaboRX: null,
       fslp: null,
       rsl: null,
+      error: false,
     };
   },
   methods: {
     calculateRSL() {
+      this.error = false;
+
       if (
-        this.powerTransmission !== 0 &&
-        this.gainAntennaTX !== 0 &&
-        this.lossesCaboTX !== 0 &&
-        this.gainAntennaRX !== 0 &&
-        this.lossesCaboRX !== 0
+        !this.powerTransmission ||
+        !this.gainAntennaTX ||
+        !this.lossesCaboTX ||
+        !this.gainAntennaRX ||
+        !this.lossesCaboRX
       ) {
-        const rsl =
-          this.powerTransmission +
-          this.gainAntennaTX -
-          this.lossesCaboTX -
-          this.fslp +
-          this.gainAntennaRX -
-          this.lossesCaboRX;
-        this.rsl = rsl.toFixed(2);
-      } else {
+        this.error = true;
         this.rsl = null;
+        return;
       }
+
+      // Potência de Transmissão (dBm) + Ganho da Antena TX (dBi) - Perdas no Cabo TX (dB) - Free Space Loss Path  + Ganho da Antena RX (dBi) - Perdas no Cabo RX (dB)
+      const rsl =
+        parseFloat(this.powerTransmission) +
+        parseFloat(this.gainAntennaTX) -
+        parseFloat(this.lossesCaboTX) -
+        parseFloat(this.fslp) +
+        parseFloat(this.gainAntennaRX) -
+        parseFloat(this.lossesCaboRX);
+
+      this.rsl = rsl.toFixed(2);
     },
   },
 };
