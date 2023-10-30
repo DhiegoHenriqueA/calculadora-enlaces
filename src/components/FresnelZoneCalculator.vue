@@ -56,7 +56,13 @@
       <div class="resultado-box">
         <p>
           O raio da zona de Fresnel é
-          <span class="result-value">{{ fresnelRadius }} metros.</span>
+          <span class="result-value">{{ fresnelRadius }} metros. </span>
+          <span v-if="fresnelRadiusWithPercentage">
+            E com a aplicação de percentual mínimo fica
+            <span class="result-value"
+              >{{ fresnelRadiusWithPercentage }} metros.
+            </span>
+          </span>
         </p>
       </div>
     </div>
@@ -77,6 +83,7 @@ export default {
       frequency: null,
       distance: null,
       fresnelRadius: null,
+      fresnelRadiusWithPercentage: null,
       error: null,
     };
   },
@@ -97,6 +104,13 @@ export default {
 
       //550 * √(DAO * DBO / ( D * f )), onde DAO eDBO são as distâncias do transmissor e receptor até o obstáculo, f é a frequência em MHz e D é a distância entre o transmissor e o receptor.
       const fresnelRadius = 550 * Math.sqrt((dao * dbo) / (d * f));
+
+      if (this.frequency < 3000) {
+        this.fresnelRadiusWithPercentage = (fresnelRadius * 0.6).toFixed(2);
+      } else {
+        this.fresnelRadiusWithPercentage = null;
+      }
+
       this.fresnelRadius = fresnelRadius.toFixed(2);
     },
   },
